@@ -7,12 +7,14 @@ from predictor import COCODemo
 
 import time
 
+VIDEO_PATH = '/cluster/storage/dpark/UTE_video/P03.mp4'
 
 def main():
     parser = argparse.ArgumentParser(description="PyTorch Object Detection Webcam Demo")
     parser.add_argument(
         "--config-file",
-        default="../configs/caffe2/e2e_mask_rcnn_R_50_FPN_1x_caffe2.yaml",
+        # default="../configs/caffe2/e2e_mask_rcnn_R_50_FPN_1x_caffe2.yaml",
+        default="configs/caffe2/e2e_mask_rcnn_R_50_FPN_1x_caffe2.yaml",
         metavar="FILE",
         help="path to config file",
     )
@@ -64,7 +66,8 @@ def main():
         min_image_size=args.min_image_size,
     )
 
-    cam = cv2.VideoCapture(0)
+    # cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(VIDEO_PATH)
     while True:
         start_time = time.time()
         ret_val, img = cam.read()
