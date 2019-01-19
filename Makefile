@@ -1,4 +1,6 @@
-PACKAGE_NAME = 'maskrcnn_benchmark'
+SHELL := /bin/bash
+
+PACKAGE_NAME = maskrcnn_benchmark
 
 error:
 	@echo "Empty target is not allowed. Choose one of the targets in the Makefile."
@@ -26,7 +28,7 @@ install_maskrcnn:
 install_pycocotools:
 	. ./venv/bin/activate && \
 	pip3 install numpy cython && \
-	pip3 install matplotlib
+	pip3 install matplotlib && \
 	pushd ${LOCAL_HOME}/lib/cocoapi/PythonAPI/ && \
 	make && \
 	popd
@@ -74,13 +76,13 @@ setup:
 	ssh ${REMOTE_IP} "echo 'source ~/.bash_custom' >> .bashrc"
 	ssh ${REMOTE_IP} "mkdir -p /local_storage/projects"
 	ssh ${REMOTE_IP} "mkdir -p /local_storage/lib"
-	ssh -t ${REMOTE_IP} "sudo apt-get install python3-venv python3-dev pytnon3-pip"
+	ssh -t ${REMOTE_IP} "cd / && sudo apt update && sudo apt-get install python3-venv python3-dev python-pip"
 
-dry_sync: clean
+dry_sync: clean_all
 	rsync -anv ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -anv ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 
-sync: clean
+sync: clean_all
 	rsync -azP ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -azP ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 
