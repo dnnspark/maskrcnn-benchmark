@@ -78,12 +78,11 @@ setup:
 	ssh ${REMOTE_IP} "mkdir -p /local_storage/lib"
 	ssh -t ${REMOTE_IP} "cd / && sudo apt update && sudo apt-get install python3-venv python3-dev python-pip"
 
-dry_sync: clean_all
-	rsync -anv ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
+dry_sync: 
+	rsync -anv ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=build/ --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -anv ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 
-sync: clean_all
-	rsync -azP ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
+sync: 
+	rsync -azP ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=build/ --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -azP ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
-
 
