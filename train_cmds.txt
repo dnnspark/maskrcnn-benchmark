@@ -15,35 +15,6 @@ python tools/train_net.py --config-file "train_configs/e2e_faster_rcnn_R_50_FPN_
 
 from p3.x16large (8 gpu)
 
-python -m torch.distributed.launch --nproc_per_node=8 tools/train_net.py --config-file "train_configs/e2e_faster_rcnn_R_50_FPN_1x.yaml"
+python -m torch.distributed.launch --nproc_per_node=8 tools/train_net.py --config-file "train_configs/e2e_faster_rcnn_R_50_FPN_1x.yaml" OUTPUT_DIR "./out"
 
 ** train works!
-
-2019-01-25 19:16:20,780 maskrcnn_benchmark.trainer INFO: eta: 5:45:54  iter: 3800  loss_classifier: 0.2977 (0.3388)  data: 0.0146 (0.0170)  loss: 0.5841 (0.6430)  loss_objectness: 0.0667 (0.0743)  time: 0.2407 (0.2408)  loss_box_reg: 0.1332 (0.1578)  loss_rpn_box_reg: 0.0582 (0.0722)  lr: 0.020000  max mem: 3651
-Traceback (most recent call last):
-  File "tools/train_net.py", line 171, in <module>
-    main()
-  File "tools/train_net.py", line 164, in main
-    model = train(cfg, args.local_rank, args.distributed)
-  File "tools/train_net.py", line 73, in train
-    arguments,
-  File "/local_storage/projects/maskrcnn-benchmark/maskrcnn_benchmark/engine/trainer.py", line 56, in do_train
-    for iteration, (images, targets, _) in enumerate(data_loader, start_iter):
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/torch/utils/data/dataloader.py", line 520, in __next__
-    return self._process_next_batch(batch)
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/torch/utils/data/dataloader.py", line 541, in _process_next_batch
-    raise batch.exc_type(batch.exc_msg)
-OSError: Traceback (most recent call last):
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/torch/utils/data/_utils/worker.py", line 99, in _worker_loop
-    samples = collate_fn([dataset[i] for i in batch_indices])
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/torch/utils/data/_utils/worker.py", line 99, in <listcomp>
-    samples = collate_fn([dataset[i] for i in batch_indices])
-  File "/local_storage/projects/maskrcnn-benchmark/maskrcnn_benchmark/data/datasets/coco.py", line 35, in __getitem__
-    img, anno = super(COCODataset, self).__getitem__(idx)
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/torchvision/datasets/coco.py", line 117, in __getitem__
-    img = Image.open(os.path.join(self.root, path)).convert('RGB')
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/PIL/Image.py", line 915, in convert
-    self.load()
-  File "/local_storage/projects/maskrcnn-benchmark/venv/lib/python3.5/site-packages/PIL/ImageFile.py", line 238, in load
-    len(b))
-OSError: image file is truncated (51 bytes not processed)
