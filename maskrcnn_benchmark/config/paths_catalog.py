@@ -5,9 +5,10 @@ import os
 
 
 class DatasetCatalog(object):
-    # DATA_DIR = "datasets"
+    # (dnnspark) custom path to dataset
     DATA_DIR = "/cluster/storage/vdata/datasets/"
     DATASETS = {
+        # (dnnspark) Adding coco2017
         "coco_2017_train": {
             "img_dir": "coco/images/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"
