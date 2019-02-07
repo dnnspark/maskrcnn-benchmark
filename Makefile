@@ -39,17 +39,20 @@ install_test:
 
 install_tools:
 	. ./venv/bin/activate && \
-	pip3 install -U seaborn scikit-image imageio
+	pip3 install -U seaborn scikit-image imageio opencv-python
 
 install: venv install_pytorch install_maskrcnn install_pycocotools
+
+dev: install install_test install_tools
 
 install_demo: install
 	. ./venv/bin/activate && \
 	pip3 install opencv-python
+	pip3 install imageio
 
 flake8:
-	flake8 --ignore=E501,F401,E128,E402,E731,F821 experiment_interface
-	flake8 --ignore=E501,F401,E128,E402,E731,F821 tests
+	. ./venv/bin/activate && \
+	python -m flake8 --config .flake8
 
 clean:
 	rm -rf `find ${PACKAGE_NAME} -name '*.pyc'`
@@ -78,11 +81,11 @@ setup:
 	ssh ${REMOTE_IP} "mkdir -p /local_storage/lib"
 	ssh -t ${REMOTE_IP} "cd / && sudo apt update && sudo apt-get install python3-venv python3-dev python-pip"
 
-dry_sync: 
+dry_sync:
 	rsync -anv ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=build/ --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -anv ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 
-sync: 
+sync:
 	rsync -azP ${PWD} ${REMOTE_IP}:/local_storage/projects/ --delete --exclude=build/ --exclude=venv/ --exclude=activate --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 	rsync -azP ~/lib/cocoapi ${REMOTE_IP}:/local_storage/lib/ --delete --exclude-from='${HOME}/projects/scripts/rsync_exclude.txt'
 

@@ -1,8 +1,9 @@
-# This is an example .flake8 config, used when developing *Black* itself.
-# Keep in sync with setup.cfg which is used for source packages.
-
 [flake8]
-ignore = E203, E266, E501, W503
-max-line-length = 80
-max-complexity = 18
-select = B,C,E,F,W,T4,B9
+ignore = E126,E201,E202,E203,E241,E265,E303,E501,E711,E712,E713,E714,E721,W391,W293,W503,W601,W603,E305,E722,E741
+exclude =
+    .git,
+    build,
+    docker,
+    venv,
+    __pycache__,
+    *_pb2.py
