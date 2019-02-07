@@ -12,7 +12,8 @@ def setup_logger(name, save_dir, distributed_rank, filename="log.txt"):
         return logger
     ch = logging.StreamHandler(stream=sys.stdout)
     ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter("%(asctime)s %(name)s %(levelname)s: %(message)s")
+    # (dnnspark) change log format.
+    formatter = logging.Formatter("%(levelname)s | %(asctime)s | %(name)s | %(message)s")
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
