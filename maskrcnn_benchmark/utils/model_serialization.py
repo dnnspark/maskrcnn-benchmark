@@ -64,7 +64,7 @@ def strip_prefix_if_present(state_dict, prefix):
         return state_dict
     stripped_state_dict = OrderedDict()
     for key, value in state_dict.items():
-        stripped_state_dict[key.replace(prefix, "")] = value
+        stripped_state_dict[key.replace(prefix, "", 1)] = value
     return stripped_state_dict
 
 
