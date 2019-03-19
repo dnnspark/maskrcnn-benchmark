@@ -52,7 +52,7 @@ install_demo: install
 
 flake8:
 	. ./venv/bin/activate && \
-	python -m flake8 --config .flake8
+	python -m flake8 --config flake8.config
 
 clean:
 	rm -rf `find ${PACKAGE_NAME} -name '*.pyc'`
